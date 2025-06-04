@@ -18,9 +18,9 @@
 		<script type="text/javascript"></script>
 		
 		 
-        <link rel="stylesheet" href="../VISOR_REFUGIOS/Leaflet.markercluster-master/dist/MarkerCluster.css" />
-        <link rel="stylesheet" href="../VISOR_REFUGIOS/Leaflet.markercluster-master/dist/MarkerCluster.Default.css" />
-		<script src="../VISOR_REFUGIOS/leaflet.markercluster.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+	<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 		<script src="REF_MALAGA_DEF_W84.js"></script>
 		 <div id ="map"> </div>
 		
@@ -91,7 +91,7 @@
 			legend.onAdd = function (map) {
 				var div = L.DomUtil.create('div', 'info legend');
 					div.innerHTML +=
-			 '		<img src="../VISOR_REFUGIOS/UMA_LOGO.jpeg" alt="logos" width="200" height="75">';
+			 '		<img src="UMA_LOGO.jpeg" alt="logos" width="200" height="75">';
 				return div;
 			};
 			legend.addTo(map);
