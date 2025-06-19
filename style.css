@@ -1,5 +1,5 @@
 html, body {
-    height: 100vh;
+    height: 100%;
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -20,8 +20,9 @@ html, body {
 }
 
 #map {
-    height:calc(100% - 75px - 50px);
+    height:100%;
     width: 100%;
+    position: relative;
 }
 
 #pie {
@@ -60,3 +61,216 @@ html, body {
 #titulo, #footer {
     font-family: "Ubuntu", sans-serif;
 }
+
+@media (max-width: 600px) {
+    #escala-mapa{
+        font-size: 14px;
+    }
+    #pie {
+        flex-direction: column;
+        text-align: center;
+        gap: 5px;
+    }
+}
+
+#capasbase {
+    position: absolute;
+    top: 90px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#capasbase button {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    background-color: #003366;
+    color: white;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    transition: background-color 0.3s;
+}
+
+#capasbase button:hover {
+    background-color: #0055aa;
+}
+
+#capasbase button.activo {
+    background-color: #FFD700;
+    color: #003366
+}
+
+#fecha_hora {
+    float: right;
+    margin-right: 10px;
+    font-weight: normal;
+    font-size: 14px;
+}
+
+.custom-popup .leaflet-popup-content-wrapper {
+    background-color: #ffffff;
+    color: #003366;
+    font-family: 'Ubuntu', sans-serif;
+    border-radius: 10px;
+    border: 2px solid #003366;
+    padding: 10px;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+}
+
+.custom-popup .leaflet-popup-tip ´{
+    background-color: #ffffff;
+    border: 2px solid #003366;
+}
+
+.custom-popup h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #003366;
+    text-align: center;
+}
+
+.custom-popup table {
+    width: 100%;
+    font-size: 14px;
+    border-collapse: collapse;
+    margin-top: 8px;
+}
+
+.custom-popup td {
+    padding: 4px 6px;
+    border-bottom: 1px solid #ccc;
+}
+
+.leaflet-control-scale {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #ffffff;
+    color: #003366;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 4px 8px;
+    border: 2px solid #003366;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.25);
+    margin: 10px;
+}
+
+.leaflet-control-scale-line {
+    background: #003366;
+    height: 6px;
+    margin-top: 0;
+    margin-bottom: 0;
+    position: relative;
+    top: 0;
+}
+
+.escala-contenedor {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.escala-barra {
+    width: 80px;
+    height: 6px;
+    background-color: #003366;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.escala-etiqueta {
+    color: #003366;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+#escala-personalizada {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #ffffff;
+    border: 2px solid #003366;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #003366;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+#escala-personalizada .escala-barra {
+    height: 6px;
+    width: 80px;
+    background-color: #003366;
+    border-radius: 2px;
+}
+
+#escala-personalizada .escala-etiqueta {
+    white-space: nowrap;
+}
+
+#agregarrefugio {
+    position: absolute;
+    top: 230px;
+    right: 20px;
+    z-index: 1000;
+}
+
+#botonagregarrefugio {
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    background-color: #FFD700;
+    color: #003366;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#botonagregarrefugio:hover {
+    background-color: #ffc107;
+    transform: sclae(1.05);
+}
+
+#botonagregarrefugio .icono{
+    font-size: 18px;
+    line-height: 1;
+}
+
+#refugioclick {
+    position: fixed;
+    pointer-events: none;
+    background-color: rgba(255, 255, 0, 0.95);
+    color: #003366;
+    padding: 6px 12px;
+    border: 2px solid #003366;
+    border-radius: 8px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 2000;
+    display: none;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+}
+

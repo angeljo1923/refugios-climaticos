@@ -28,8 +28,32 @@
 			<span class="titulo_texto">VISOR REFUGIOS CLIMÁTICOS UMA</span>
 		</div>
 	</div>
-	<div id="map"></div>
-	<div id="pie">A. Julián Hernández // Ángel J. Sánchez</div>
+	<div id="map">
+		<div id="escala-personalizada">
+			<div class="escala-barra"></div>
+			<div class="escala-etiqueta">200 m</div>
+		</div>
+	</div>
+
+	
+
+	<div id="capasbase">
+		<button id="botonpnoa">Foto aérea</button>
+		<button id="botonosm">Open Street Map</button>
+		<button id="botonesri">ESRI Maps</button>
+	</div>
+
+	<div id="agregarrefugio">
+		<button id="botonagregarrefugio">
+			<span class="icono">&#x2795</span> Agregar refugio
+		</button>
+	</div>
+	
+	<div id="pie">
+		<span id="coordenadas_mapa" style="float: left; margin-left: 10px;">Coordenadas: </span>
+		<span id="fecha_hora" style="float: right; margin-right: 10px;"></span>
+		A. Julián Hernández // Ángel J. Sánchez
+	</div>
 
 	<!--Aquí el script de leaflet-->
 		
@@ -51,5 +75,7 @@
 	<!--Aquí el enlace al script del visor-->
 		
 	<script src="script.js"></script>
+
+	
 	</body>
 </html> 
