@@ -35,6 +35,11 @@
 		</div>
 	</div>
 
+	<div id="encuesta-modal" class="modal-hidden">
+		<div class="modal-content">
+			<div id="modal-contenido"></div>
+		</div>
+	</div>
 	
 
 	<div id="capasbase">
@@ -65,9 +70,22 @@
 	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 	<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
-	<!--Enlace al tipo de letra-->
+	<!--USER ID Y API DE EMAILJS-->
 
+	<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
+	<script>
+
+		window.addEventListener("load", function() {
+			if (typeof emailjs !== "undefined") {
+				emailjs.init("XVVy-IexTTomx60lY");
+				console.log("EmailJS cargado correctamente");
+			} else {
+				console.error("La biblioteca no se ha cargado");
+			}
+		});
+
+	</script>
 
 	<!--Aquí el enlace a la capa-->
 	<script src="REF_MALAGA_DEF_W84.js"></script>

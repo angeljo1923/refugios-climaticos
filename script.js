@@ -138,12 +138,19 @@ var map = L.map('map', {
 					<tr><td><strong>Acceso:</strong> ${feature.properties.acceso}</td></tr>
 					<tr><td><strong>Ubicación:</strong> ${feature.properties.Ubicacion}</td></tr>
 					<tr><td><strong>Horario:</strong> ${feature.properties.Horario}</td></tr>
-					<tr><td><strong>Encuesta:</strong> ${feature.properties.encuesta}</td></tr>
 				</table>
+				<div class="boton-centro">
+				<button class="boton-encuesta" onclick="abrirEncuesta('${feature.properties.nombre}', '${feature.properties.id_dera}')">
+				Califica este refugio
+				</button>
+				</div>
 			</div>`,
 			{ minWidth: 180, maxWidth: 260 }
 			);
 		}
+
+		//Funcion de la encuesta
+
 		
 		function colorPuntos(d) {
 			return '#088A68';
@@ -209,4 +216,93 @@ var map = L.map('map', {
 		}
 	});
 
-	
+	//Bloque de la encuesta a partir de aquí
+
+	emailjs.init("XVVy-IexTTomx60lY");
+
+	let pasoActual = 0;
+	let respuestas = {};
+	let refugioSeleccionado = { nombre: "", id_dera: "" };
+
+	const encuestaModal = document.getElementById("encuesta-modal");
+	const modalContenido = document.getElementById("modal-contenido");
+
+	const pasos = [
+  		{
+    		texto: "¿Cómo valorarías la accesibilidad?",
+    		opciones: ["Buena", "Aceptable", "Mala"]
+  		},
+  		{
+    		texto: "¿Cómo valorarías el confort térmico?",
+    		opciones: ["Adecuado", "Regular", "Inadecuado"]
+  		},
+  		{
+    		texto: "¿Qué servicios están disponibles?",
+    		opciones: ["Agua", "Electricidad", "Baño", "Ninguno"]
+  		},
+  		{
+    		texto: "Observaciones (máx. 500 caracteres)",
+    		observaciones: true
+  		}
+	];
+
+	function abrirEncuesta(nombre, id_dera) {
+  		pasoActual = 0;
+  		respuestas = {};
+  		refugioSeleccionado = { nombre, id_dera };
+  		mostrarPaso(pasoActual);
+  		encuestaModal.classList.remove("modal-hidden");
+		}
+
+	function mostrarPaso(paso) {
+  		const pasoData = pasos[paso];
+  		modalContenido.innerHTML = "";
+
+  		if (pasoData.observaciones) {
+    		modalContenido.innerHTML = `
+      		<h3>${pasoData.texto}</h3>
+      		<textarea id="observaciones" maxlength="500" rows="5" placeholder="Escribe tus comentarios..."></textarea>
+      		<button class="enviar-btn" onclick="enviarResultados()">Enviar</button>
+    	`;
+  	} else {
+    	const botones = pasoData.opciones.map(op =>
+      	`<button onclick="seleccionarOpcion('${op}')">${op}</button>`
+    	).join("");
+    	modalContenido.innerHTML = `
+      	<h3>${pasoData.texto}</h3>
+      	<div class="opciones">${botones}</div>
+    	`;
+  		}
+	}
+
+	function seleccionarOpcion(opcion) {
+  		respuestas[`paso_${pasoActual + 1}`] = opcion;
+  		pasoActual++;
+  		if (pasoActual < pasos.length) {
+    		mostrarPaso(pasoActual);
+  		}
+		}
+
+	function enviarResultados() {
+  		const obsInput = document.getElementById("observaciones");
+  		respuestas[`paso_${pasoActual + 1}`] = obsInput ? obsInput.value : "";
+
+  		const payload = {
+    		nombreRefugio: refugioSeleccionado.nombre,
+    		idDera: refugioSeleccionado.id_dera,
+    		accesibilidad: respuestas["paso_1"],
+    		confort: respuestas["paso_2"],
+    		servicios: respuestas["paso_3"],
+    		comentarios: respuestas["paso_4"]
+  		};
+
+  		emailjs.send("service_lf5583h", "template_3hznx42", payload)
+    		.then(() => {
+      		alert("Gracias por tu respuesta. Se ha enviado correctamente.");
+      		encuestaModal.classList.add("hidden");
+    		})
+    		.catch(error => {
+      		console.error("Error al enviar:", error);
+      		alert("Hubo un error al enviar la encuesta.");
+    		});
+}
