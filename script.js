@@ -255,25 +255,34 @@ var map = L.map('map', {
 		}
 
 	function mostrarPaso(paso) {
-  		const pasoData = pasos[paso];
-  		modalContenido.innerHTML = "";
+		const pasoData = pasos[paso];
+		modalContenido.innerHTML = ""; //Limpia el contenido anterior
 
-  		if (pasoData.observaciones) {
-    		modalContenido.innerHTML = `
-      		<h3>${pasoData.texto}</h3>
-      		<textarea id="observaciones" maxlength="500" rows="5" placeholder="Escribe tus comentarios..."></textarea>
-      		<button class="enviar-btn" onclick="enviarResultados()">Enviar</button>
-    	`;
-  	} else {
-    	const botones = pasoData.opciones.map(op =>
-      	`<button onclick="seleccionarOpcion('${op}')">${op}</button>`
-    	).join("");
-    	modalContenido.innerHTML = `
-      	<h3>${pasoData.texto}</h3>
-      	<div class="opciones">${botones}</div>
-    	`;
-  		}
-	}
+		if (pasoData.observaciones) {
+			//Último paso con textarea
+			modalContenido.innerHTML = `
+			<h3>${pasoData.texto}</h3>
+			<textarea id="observaciones" maxlength="500" rows="5" placeholder="Deja aquí tus comentarios"></textarea>
+			<div class="boton-centro">
+				<button class="enviar-btn" onclick="enviarResultados()">Enviar</button>
+				<button class="enviar-btn" onclick="cerrarEncuesta()">Finalizar</button>
+			</div>
+			`;
+		} else {
+			//Preguntas con opciones y botón de cancelar
+			const botones = pasoData.opciones.map(op =>
+				`<button class="opcion-btn" onclick="seleccionarOpcion('${op}')">${op}</button>`
+			).join("");
+
+			modalContenido.innerHTML = `
+			<h3>${pasoData.texto}</h3>
+			<div class="opciones">${botones}</div>
+			<div class="boton-centro">
+				<button class="enviar-btn" onclick="cerrarEncuesta()">Cancelar</button>
+			</div>
+			`;
+			}
+		}
 
 	function seleccionarOpcion(opcion) {
   		respuestas[`paso_${pasoActual + 1}`] = opcion;
@@ -296,13 +305,36 @@ var map = L.map('map', {
     		comentarios: respuestas["paso_4"]
   		};
 
+		console.log("Enviando datos a EmailJS", payload); //Se verifica el contenido
+
   		emailjs.send("service_lf5583h", "template_3hznx42", payload)
     		.then(() => {
-      		alert("Gracias por tu respuesta. Se ha enviado correctamente.");
-      		encuestaModal.classList.add("hidden");
+				console.log("Correo enviado correctamente."); //Confirmación
+				console.log("Mostrando botón finalizar")
+				mostrarBotonFinalizar();
     		})
     		.catch(error => {
       		console.error("Error al enviar:", error);
       		alert("Hubo un error al enviar la encuesta.");
     		});
-}
+	}
+
+	//Botón de finalizar encuesta que vuelve todo al estado original
+
+	function mostrarBotonFinalizar() {
+  	modalContenido.innerHTML = `
+    	<h3>Gracias por tu respuesta. Se ha enviado correctamente.</h3>
+		<div class="boton-centro">
+    	<button class="enviar-btn" id="btn-finalizar">Finalizar</button>
+		</div>
+  	`;
+	const finalizarBtn = document.getElementById("btn-finalizar");
+	if (finalizarBtn) {
+	finalizarBtn.addEventListener("click", cerrarEncuesta)
+		}
+	}
+
+	function cerrarEncuesta() {
+  		encuestaModal.classList.add("modal-hidden");
+  		modalContenido.innerHTML = "";
+	}
