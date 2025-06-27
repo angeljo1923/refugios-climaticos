@@ -23,13 +23,25 @@
 	<!--Aquí van los divs del proyecto-->
 
 	<div id="titulo">
-		<img src="UMA_LOGO.jpeg" alt="Logo UMA" id="logo_uma">
-		<div class="titulo_centro">
-			<span class="titulo_texto">VISOR REFUGIOS CLIMÁTICOS UMA</span>
-		</div>
+		<span class="titulo_texto">VISOR DE REFUGIOS CLIMÁTICOS</span>
 	</div>
+
+	
 	<div id="map">
-		<div id="escala-personalizada">
+
+		<div id="botones-localizacion">
+			<button onclick="centrarEnMalaga()">
+				<img src="img/malaga.png" class="icono-boton">
+				<span>Málaga</span>
+			</button>
+			<button onclick="centrarEnSevilla()">
+				<img src="img/sevilla.png" class="icono-boton">
+				<span>Sevilla</span>
+			</button>
+			<button onclick="volverAlInicio()">Volver al Inicio</button>
+			</div>
+		
+			<div id="escala-personalizada">
 			<div class="escala-barra"></div>
 			<div class="escala-etiqueta">200 m</div>
 		</div>
@@ -38,6 +50,17 @@
 	<div id="encuesta-modal" class="modal-hidden">
 		<div class="modal-content">
 			<div id="modal-contenido"></div>
+		</div>
+	</div>
+
+	<div id="asistente-modal" class="modal-hidden">
+		<div class="modal-content">
+			<div id="asistente-contenido"></div>
+			<div class="boton-centro">
+				<button id="btn-cancelar-asistente" class="enviar-btn">Cancelar</button>
+				<button id="btn-siguiente-asistente" class="enviar-btn">Siguiente</button>
+				<button id="btn-finalizar-asistente" class="enviar-btn">Finalizar</button>
+			</div>
 		</div>
 	</div>
 	
@@ -52,6 +75,14 @@
 		<button id="botonagregarrefugio">
 			<span class="icono">&#x2795</span> Agregar refugio
 		</button>
+	</div>
+
+	<div id="logo-citoseq">
+		<img src="Logo_citoseq.png" alt="Logo Citoseq">
+	</div>
+
+	<div id="logo-financiador">
+		<img src="Logo_financiador.png">
 	</div>
 	
 	<div id="pie">
@@ -87,8 +118,7 @@
 
 	</script>
 
-	<!--Aquí el enlace a la capa-->
-	<script src="REF_MALAGA_DEF_W84.js"></script>
+	
 
 	<!--Aquí el enlace al script del visor-->
 		
