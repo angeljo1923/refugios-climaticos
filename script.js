@@ -59,28 +59,38 @@ var map = L.map('map', {
 
 		//Capa geoJson.
 
-		let geojson;
 		fetch("malaga_sevilla_4326.geojson")
-			.then(response => response.json())
-			.then(data => {
-				geojson = data;
+  .then(response => response.json())
+  .then(data => {
+    geojson = data;
 
-				//Se muestran solo puntos que tienen SI en el campo verificado con Marker Cluster
+    // Se muestran solo puntos que tienen SI en el campo verificado con Marker Cluster
+    const clusterGroup = L.markerClusterGroup();
 
-				const clusterGroup = L.markerClusterGroup();
+    capaRefugiosVerificados = L.geoJSON(geojson, {
+      filter: feature => feature.properties.verificado === "SI",
+      onEachFeature: popup_REF,
+      pointToLayer: (feature, latlng) => {
+        return L.circleMarker(latlng, MarkerOptions);
+      }
+    });
 
-				capaRefugiosVerificados = L.geoJSON(geojson, {
-					filter: feature=> feature.properties.verificado === "SI",
-					onEachFeature: popup_REF,
-					pointToLayer: (feature, latlng) => {
-						return L.circleMarker(latlng, MarkerOptions)
-						}
-				});
-				
-				clusterGroup.addLayer(capaRefugiosVerificados);
-				map.addLayer(clusterGroup);
+    clusterGroup.addLayer(capaRefugiosVerificados);
+    map.addLayer(clusterGroup);
 
-			});
+    // 🔁 Aquí sí debes definir la capa REF porque geojson ya existe
+    var REF = L.geoJSON(geojson, {
+      pointToLayer: function (feature, latlng) {
+        return L.circleMarker(latlng, MarkerOptions);
+      },
+      style: estilo_REF,
+      onEachFeature: popup_REF
+    });
+
+    map.addLayer(REF);
+    markers.addLayer(REF);
+    map.addLayer(markers);
+  });
 
 		//Capas base
 		
@@ -216,16 +226,7 @@ var map = L.map('map', {
 			};
 			};
 		
-		var REF = L.geoJSON(geojson, {
-			pointToLayer: function (feature, latlng) {
-				return L.circleMarker(latlng, MarkerOptions);
-				},
-			style: estilo_REF,
-			onEachFeature: popup_REF
-			});
-		map.addLayer(REF);
-		   markers.addLayer(REF);
-		   map.addLayer(markers);
+		
 
 
 	//Fecha y hora del pie de página
