@@ -23,13 +23,29 @@
 	<!--Aquí van los divs del proyecto-->
 
 	<div id="titulo">
-		<img src="UMA_LOGO.jpeg" alt="Logo UMA" id="logo_uma">
-		<div class="titulo_centro">
-			<span class="titulo_texto">VISOR REFUGIOS CLIMÁTICOS UMA</span>
-		</div>
+  		<img id="logo-izquierdo" src="img/logos.jpeg" alt="Logo institucional">
+  		<div class="titulo_centro">
+    		<span class="titulo_texto">VISOR DE REFUGIOS CLIMÁTICOS</span>
+  		</div>
+  		<img id="logo-derecho" src="logo_financiador.png" alt="Financiador">
 	</div>
+
+	
 	<div id="map">
-		<div id="escala-personalizada">
+
+		<div id="botones-localizacion">
+			<button onclick="centrarEnMalaga()">
+				<img src="img/malaga.png" class="icono-boton">
+				<span>Málaga</span>
+			</button>
+			<button onclick="centrarEnSevilla()">
+				<img src="img/sevilla.png" class="icono-boton">
+				<span>Sevilla</span>
+			</button>
+			<button onclick="volverAlInicio()">Volver al Inicio</button>
+			</div>
+		
+			<div id="escala-personalizada">
 			<div class="escala-barra"></div>
 			<div class="escala-etiqueta">200 m</div>
 		</div>
@@ -38,6 +54,17 @@
 	<div id="encuesta-modal" class="modal-hidden">
 		<div class="modal-content">
 			<div id="modal-contenido"></div>
+		</div>
+	</div>
+
+	<div id="asistente-modal" class="modal-hidden">
+		<div class="modal-content">
+			<div id="asistente-contenido"></div>
+			<div class="boton-centro">
+				<button id="btn-cancelar-asistente" class="enviar-btn">Cancelar</button>
+				<button id="btn-siguiente-asistente" class="enviar-btn">Siguiente</button>
+				<button id="btn-finalizar-asistente" class="enviar-btn">Finalizar</button>
+			</div>
 		</div>
 	</div>
 	
@@ -53,11 +80,36 @@
 			<span class="icono">&#x2795</span> Agregar refugio
 		</button>
 	</div>
-	
+
+	<div id="leyenda-refugios" class="leyenda-zoom-alto oculto">
+		<div class="leyenda-header">
+			<h4>Leyenda de símbolos</h4>
+			<button id="cerrar-leyenda" title="Cerrar leyenda">X</button>
+		</div>
+			<ul id="contenido-leyenda"></ul>
+	</div>
+
 	<div id="pie">
-		<span id="coordenadas_mapa" style="float: left; margin-left: 10px;">Coordenadas: </span>
-		<span id="fecha_hora" style="float: right; margin-right: 10px;"></span>
-		A. Julián Hernández // Ángel J. Sánchez
+
+		<div class="pie-izquierda" id="coordenadas_mapa">Coordenadas: </div>
+
+		<div class="pie-centro">
+			<a href="https://www.linkedin.com" target="_blank">
+				<img src="img/linkedin.png" class="icono-social">
+			</a>
+			<a href="mailto:julian@hotmail.com">
+				<img src="img/email.svg" class="icono-social">
+			</a>
+			A. Julián Hernández // Ángel J. Sánchez
+			<a href="https://www.linkedin.com" target="_blank">
+				<img src="img/linkedin.png" class="icono-social">
+			</a>
+			<a href="mailto:julian@hotmail.com">
+				<img src="img/email.svg" class="icono-social">
+			</a>
+		</div>
+
+		<div class="pie-derecha" id="fecha_hora"></div>
 	</div>
 
 	<!--Aquí el script de leaflet-->
@@ -87,8 +139,7 @@
 
 	</script>
 
-	<!--Aquí el enlace a la capa-->
-	<script src="REF_MALAGA_DEF_W84.js"></script>
+	
 
 	<!--Aquí el enlace al script del visor-->
 		

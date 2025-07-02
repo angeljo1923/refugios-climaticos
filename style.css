@@ -8,34 +8,33 @@ html, body {
 }
 
 #titulo {
-    position: relative;
+    background-color: white;
     display: flex;
     align-items: center;
-    background-color: white;
-    padding: 0 20px;
-    height: 75px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    justify-content: space-between;
+    padding: 5px 20px;
+    height: 60px;
     position: relative;
-    width: 100%
+    z-index: 1000;
 }
 
 #map {
+    flex: 1;
     height:100%;
     width: 100%;
     position: relative;
 }
 
 #pie {
-    width: 100%;
-    background-color: #003366;
-    color: white;
-    text-align: center;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 8px 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    z-index: 1001;
-    position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 20px;
+  background-color: #003366;
+  color: white;
+  font-size: 16px;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: bold;
 }
 
 #logo_uma{
@@ -385,4 +384,202 @@ html, body {
 
 .enviar-btn:hover {
   background-color: #ffc107;
+}
+
+
+.titulo_centro {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.titulo_texto {
+    font-size: 2em;
+    font-family: 'Ubuntu', sans-serif;
+    color: #003366;
+    font-weight: bold;
+}
+
+#logo-citoseq {
+    position: absolute;
+    bottom: 70px;
+    left: 20px;
+    z-index: 999;
+}
+
+#logo-citoseq img {
+    height: 120px;
+    width: auto;
+}
+
+#logo-financiador {
+    position: absolute;
+    bottom: 50px;
+    right: 10px;
+    z-index: 999;
+}
+
+#logo-financiador img {
+    height: 120px;
+    width: 450px;
+}
+
+#botones-localizacion {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+    display: flex;
+    gap: 12px;
+}
+
+#botones-localizacion button {
+    background-color: #003366;
+    color: white;
+    border: none;
+    padding: 8px 28px;
+    border-radius: 10px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    min-width: 80px;
+}
+
+#botones-localizacion button:hover {
+    background-color: #005599;
+}
+
+.icono-boton {
+    height: 40px;
+    width: 40px;
+    margin-right: 15px;
+    filter: brightness(0) invert(1);
+}
+
+#asistente-modal textarea,
+#asistente-modal select, 
+#asistente-modal input {
+    width: 100%;
+    padding: 10px;
+    font-family: 'Ubuntu', sans-serif;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+#logo-izquierdo,
+#logo-derecho {
+    height: 100%;
+    max-height: 60px;
+    object-fit: contain;
+}
+
+.pie-izquierda, 
+.pie-derecha {
+    font-size: 14px;
+    font-weight: normal;
+    white-space: nowrap;
+}
+
+.pie-centro {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.icono-social {
+    height: 24px;
+    width: 24px;
+    filter: brightness(0) invert(1);
+    transition: transform 0.2s;
+    object-fit: contain;
+    vertical-align: middle;
+    margin: 0 4px;
+}
+
+.icono-social:hover {
+    transform: scale(1.2);
+}
+
+
+.icono-refugio {
+    filter: invert(30%) sepia(100%) saturate(500%) hue-rotate(180deg) brightness(90%) contrast(100%);
+    width: 32px;
+    height: 32px;
+}
+
+#leyenda-refugios {
+    position: absolute;
+    bottom: 80px;
+    right: 20px;
+    background-color: #ffffff;
+    border: 2px solid #003366;
+    border-radius: 10px;
+    padding: 12px;
+    z-index: 999;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 14px;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+    max-width: 250px;
+    max-height: 200;
+    overflow-y: auto;
+}
+
+#leyenda-refugios h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #003366;
+    font-size: 16px;
+}
+
+#leyenda-refugios ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#leyenda-refugios li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+#leyenda-refugios img {
+    width: 24px;
+    height: 24px;
+    filter: invert(30%) sepia(100%) saturate(500%) hue-rotate(180deg) brightness(90%) contrast(100%);
+}
+
+.oculto {
+    display: none;
+}
+
+.leyenda-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#cerrar-leyenda {
+    background: none;
+    border: none;
+    color: #003366;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0 5px;
+    line-height: 1;
+    font-weight: bold;
+}
+
+#cerrar-leyenda:hover {
+    color: #c00
 }
