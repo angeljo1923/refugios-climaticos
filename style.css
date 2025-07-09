@@ -583,3 +583,17 @@ html, body {
 #cerrar-leyenda:hover {
     color: #c00
 }
+
+@media (max-height: 750px) {
+    #leyenda-refugios {
+        bottom: 160px;
+    }
+
+    #agregarrefugio {
+        top: 180px;
+    }
+
+    #capasbase {
+        top: 40px;
+    }
+}

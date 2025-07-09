@@ -212,14 +212,15 @@ var map = L.map('map', {
 						if (!leyendaCerradaManual) {
 							generarLeyenda();
 							leyenda.classList.remove("oculto");
-						};
+						} else {
+							leyenda.classList.add("oculto")
+						}
 
 					} else {
 						if (map.hasLayer(capaIconos)) {
 							map.removeLayer(capaIconos);
 							map.addLayer(clusterGroup);
 						}
-						leyendaCerradaManual = false;
 						leyenda.classList.add("oculto");
 					}
 				});
@@ -717,6 +718,15 @@ var map = L.map('map', {
 
 	btnCancelar.addEventListener("click", () => {
 		asistenteModal.classList.add("modal-hidden");
+
+		//La leyenda se vuelve a mostrar
+
+		leyendaCerradaManual = false;
+
+		//Mostrar leyenda si el zoom es suficientemente alto
+		if (map.getZoom() >= 14) {
+			document.getElementById("leyenda-refugios").classList.remove("oculto");
+		}
 	});
 
 	btnSiguiente.addEventListener("click", () => {
