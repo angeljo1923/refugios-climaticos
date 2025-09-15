@@ -25,7 +25,7 @@
 	<div id="titulo">
   		<img id="logo-izquierdo" src="img/logos.jpeg" alt="Logo institucional">
   		<div class="titulo_centro">
-    		<span class="titulo_texto">VISOR DE REFUGIOS CLIMÁTICOS</span>
+    		<span class="titulo_texto">Red potencial de refugios climáticos</span>
   		</div>
   		<img id="logo-derecho" src="Logo_financiador.png" alt="Financiador">
 	</div>
@@ -50,6 +50,7 @@
 			<div class="escala-etiqueta">200 m</div>
 		</div>
 	</div>
+	
 
 	<div id="encuesta-modal" class="modal-hidden">
 		<div class="modal-content">
@@ -79,6 +80,18 @@
 		<button id="botonagregarrefugio">
 			<span class="icono">&#x2795</span> Agregar refugio
 		</button>
+	</div>
+
+	<div id="modalCompartir" class="modal modal-hidden">
+		<div class="modal-content">
+			<h3>Compartir refugio</h3>
+			<div class="opciones">
+				<button onclick="compartirVistaActual()">Compartir Vista actual del mapa</button>
+				<button id="compartir-refugio-btn" onclick="compartirRefugioBtn()">Compartir refugio</button>
+
+				<button onclick="cerrarModalCompartir()">Cancelar</button>
+			</div>
+		</div>
 	</div>
 
 	<div id="leyenda-refugios" class="leyenda-zoom-alto oculto">
@@ -139,11 +152,21 @@
 
 	</script>
 
-	
+	<!--HTML 2 CANVAS-->
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+        integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
+        crossorigin="anonymous"
+        referrer licy="no-referrer"></script>
+
+	<!--TURF-->
+
+	<script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+
+	
 	<!--Aquí el enlace al script del visor-->
 		
-	<script src="obfuscated.js"></script>
+	<script src="script.js"></script>
 
 	
 	</body>

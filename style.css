@@ -590,3 +590,198 @@ html, body {
         overflow-y: auto !important;
     }
 }
+
+.boton-exportar {
+    position: absolute;
+    top: 135px;
+    right: 20px;
+    z-index: 1001;
+    background-color: #2a87d0;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.boton-exportar:hover {
+    background-color: #1e6fb8;;
+}
+
+.modo-captura .leaflet-control-container {
+    display: none !important;
+}
+
+.modo-captura .leaflet-tile {
+    visibility: hidden;
+}
+
+.icono-buffer-refugio {
+    width: 48px;
+    height: 48px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+.icono-buffer-refugio img {
+    width: 24px;
+    height: 24px;
+    filter: invert(30%) sepia(100%) saturate(500%) hue-rotate(180deg) brightness(90%) contrast(100%);
+}
+
+.icono-leyenda {
+	width: 24px;
+	height: 24px;
+	margin-right: 8px;
+	vertical-align: middle;
+}
+
+.icono-interior {
+	filter: hue-rotate(180deg) brightness(1.2); /* Azul */
+}
+
+.icono-exterior {
+	filter: hue-rotate(90deg) brightness(1.2); /* Verde */
+}
+
+.leyenda-grupo {
+    margin-top: 10px;
+}
+
+.leyenda-grupo label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+}
+
+/* Estilo para los checkboxes principales de grupo */
+.checkbox-grupo {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 0.4em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+/* Opcional: cambia el color del texto según el grupo */
+.checkbox-interior label {
+  color: #0052cc; /* Azul */
+}
+
+.checkbox-exterior label {
+  color: #006600; /* Verde oscuro */
+}
+
+.checkbox-tipo-general {
+    font-weight: bold;
+    font-size: 15px;
+    color: #003366;
+    margin-top: 10px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #f0f8ff;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+/* Estilo diferenciado para los checkboxes de grupo (interior/exterior) */
+.grupo-checkbox {
+    transform: scale(1.3); /* Aumenta el tamaño del checkbox */
+    margin-right: 10px;
+    accent-color: #2a9df4; /* Azul por defecto */
+}
+
+/* Color específico para Interior */
+input.grupo-checkbox[data-tipologia="Interior"] {
+    accent-color: #2a9df4; /* Azul */
+}
+
+/* Color específico para Exterior */
+input.grupo-checkbox[data-tipologia="Exterior"] {
+    accent-color: #3bb143; /* Verde */
+}
+
+/* Hace que los labels de grupo sean más visibles */
+.leyenda-grupo > label {
+    font-weight: bold;
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.leaflet-marker-icon.resaltado-refugio {
+    box-shadow: 0 0 12px 4px rgba(255, 215, 0, 0.8);
+    transform: scale(1.3);
+    z-index: 9999 !important;
+}
+
+@keyframes resaltarPulse {
+    0% {
+        box-shadow: 0 0 15px 5px yellow;
+    }
+    50% {
+        box-shadow: 0 0 25px 10px yellow;
+    }
+    100% {
+        box-shadow: 0 0 15px 5px yellow;
+    }
+}
+
+.resaltado-refugio {
+    box-shadow: 0 0 15px 5px yellow !important;
+    border-radius: 50%;
+    z-index: 1000;
+}
+
+.marcador-resaltado {
+    filter: drop-shadow(0 0 8px #FFD700);
+    transform: scale(1.2);
+    transition: transform 0.2s ease, filter 0.2s ease;
+    z-index: 999 !important;
+}
+
+/* Nuevo estilo para el marcador resaltado */
+.leaflet-marker-icon.resaltado-refugio {
+    box-shadow: 0 0 15px 5px yellow !important;
+    border-radius: 50%;
+    z-index: 9999;
+}
+
+/* Estilos para los checkboxes de servicios en la encuesta */
+.modal-content .opciones label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 15px;
+    color: #003366;
+    background-color: #f9f9f9;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.modal-content .opciones label:hover {
+    background-color: #e6f0ff;
+    transform: scale(1.02);
+}
+
+.modal-content .opciones input[type="checkbox"] {
+    transform: scale(1.3);
+    accent-color: #FFD700; /* Amarillo dorado para mantener coherencia */
+    cursor: pointer;
+}
