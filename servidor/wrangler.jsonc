@@ -1,0 +1,14 @@
+{
+  "name": "refugios-climaticos-altas",
+  "main": "src/servidor.js",
+  "compatibility_date": "2026-11-09",
+  "workers_dev": true,
+  "vars": {
+    "ORIGENES_AUTORIZADOS": "https://angeljo1923.github.io,https://prevend.uma.es,https://www.prevend.uma.es",
+    "DOMINIOS_TURNSTILE": "angeljo1923.github.io,prevend.uma.es,www.prevend.uma.es"
+  },
+  "ratelimits": [
+    {"name": "LIMITE_CONSULTAS", "namespace_id": "892671", "simple": {"limit": 30, "period": 60}},
+    {"name": "LIMITE_ALTAS", "namespace_id": "892672", "simple": {"limit": 5, "period": 60}}
+  ]
+}

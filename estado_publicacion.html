@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Refugios aprobados y publicados</title>
+  <style>
+    :root {font-family:Ubuntu,system-ui,Arial,sans-serif;color:#003366;background:#f3f6fa}
+    *{box-sizing:border-box}body{margin:0}header{padding:24px max(16px,calc((100vw - 940px)/2));background:#003366;color:white}
+    h1{font-size:1.6rem;margin:0 0 6px}header p{margin:0;line-height:1.5}main{max-width:940px;margin:20px auto;padding:0 16px}
+    .panel{background:#fff;border:1px solid #d5e0eb;border-radius:12px;padding:18px;box-shadow:0 3px 10px #1232}
+    p{line-height:1.5}label{display:block;font-weight:bold;margin:12px 0 5px}input{display:block;width:100%;font:inherit;border:1px solid #8297aa;border-radius:8px;padding:12px}
+    table{border-collapse:collapse;width:100%;margin-top:15px}th,td{text-align:left;padding:11px;border-bottom:1px solid #e4eaf0}th{background:#edf2fa}
+    a{color:#004f98;font-weight:600}small{color:#4e6275}.desplazamiento{overflow-x:auto}.error{color:#aa2121}
+    @media(max-width:600px){table{font-size:.85rem}th,td{padding:7px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>Refugios aprobados y publicados</h1>
+  <p>Consulta pública de las incorporaciones validadas por la Universidad de Sevilla.</p>
+</header>
+<main><div class="panel">
+  <p>Esta página muestra únicamente refugios incorporados desde la hoja de solicitudes y que están en el GeoJSON publicado. Las propuestas pendientes o rechazadas no aparecen.</p>
+  <p id="resumen" role="status">Consultando la capa publicada…</p>
+  <label for="busqueda">Buscar por nombre, municipio o FID</label>
+  <input id="busqueda" type="search" placeholder="Ejemplo: biblioteca, Sevilla o 707">
+  <div class="desplazamiento"><table>
+    <thead><tr><th>FID</th><th>Refugio</th><th>Municipio</th><th>Enlace</th></tr></thead>
+    <tbody id="registros"></tbody>
+  </table></div>
+  <p><small>Si acabas de aprobar una fila, la publicación puede tardar unos minutos. Si no aparece, informa al responsable técnico para que revise la ejecución de GitHub Actions.</small></p>
+</div></main>
+<script>
+"use strict";
+const entrada = document.getElementById("busqueda");
+const lista = document.getElementById("registros");
+const resumen = document.getElementById("resumen");
+let incorporaciones = [];
+function dibujar() {
+  const texto = entrada.value.trim().toLocaleLowerCase("es");
+  const visibles = incorporaciones.filter(refugio =>
+    [refugio.nombre, refugio.municipio, String(refugio.fid)]
+      .some(valor => String(valor).toLocaleLowerCase("es").includes(texto)));
+  lista.replaceChildren();
+  for (const refugio of visibles.slice(0, 100)) {
+    const fila = document.createElement("tr");
+    for (const valor of [refugio.fid, refugio.nombre, refugio.municipio]) {
+      const celda = document.createElement("td");
+      celda.textContent = String(valor);
+      fila.appendChild(celda);
+    }
+    const celdaEnlace = document.createElement("td");
+    const enlace = document.createElement("a");
+    enlace.href = "index.html?fid=" + encodeURIComponent(refugio.fid);
+    enlace.textContent = "Abrir refugio";
+    celdaEnlace.appendChild(enlace);
+    fila.appendChild(celdaEnlace);
+    lista.appendChild(fila);
+  }
+  resumen.textContent = incorporaciones.length + " refugios incorporados desde la hoja; " +
+    visibles.length + " coinciden con la búsqueda.";
+}
+entrada.addEventListener("input", dibujar);
+fetch("malaga_sevilla_4326.geojson", {cache:"no-store"})
+  .then(respuesta => {if (!respuesta.ok) throw Error("No se pudo descargar la capa.");return respuesta.json();})
+  .then(datos => {
+    incorporaciones = (datos.features || [])
+      .filter(elemento => elemento.properties?.origen_registro === "hoja_solicitudes" &&
+                           elemento.properties?.verificado === "SI")
+      .map(elemento => ({fid:elemento.properties.fid,nombre:elemento.properties.nombre,
+                         municipio:elemento.properties.municipio}))
+      .sort((a,b) => Number(b.fid)-Number(a.fid));
+    dibujar();
+  })
+  .catch(() => {resumen.textContent = "No se puede consultar ahora la capa publicada.";
+                resumen.classList.add("error");});
+</script>
+</body></html>

@@ -1,21 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 	<meta charset="UTF-8">
-	<title>Refugios_Clima</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Red potencial de refugios climáticos</title>
+	<meta name="description" content="Visor cartográfico de refugios climáticos de Málaga y Sevilla.">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+	<meta name="theme-color" content="#003366">
 
 	<!--Hoja de estilos de Leaflet-->
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
 
-	<!--Enlace a la hoja de estilos-->
-	<link rel="stylesheet" href="style.css">
+	<!--Cargar estilos de los plugins antes de los ajustes-->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+		<link rel="stylesheet" href="css/01-base.css">
+	<link rel="stylesheet" href="css/02-tabletas.css">
+	<link rel="stylesheet" href="css/03-moviles.css">
+	<link rel="stylesheet" href="css/04-horizontal.css">
 
 	<!--Enlace a tipo de letra UBUNTU-->
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="icon" href="data:,">
+	
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 </head>
 	<body>
@@ -31,9 +40,12 @@
 	</div>
 
 	
-	<div id="map">
+	<div id="mapa">
+
+		<!--Botones de localización-->
 
 		<div id="botones-localizacion">
+
 			<button onclick="centrarEnMalaga()">
 				<img src="img/malaga.png" class="icono-boton">
 				<span>Málaga</span>
@@ -44,82 +56,70 @@
 			</button>
 			<button onclick="volverAlInicio()">Volver al Inicio</button>
 			</div>
-		
-			<div id="escala-personalizada">
-			<div class="escala-barra"></div>
-			<div class="escala-etiqueta">200 m</div>
-		</div>
-	</div>
-	
 
-	<div id="encuesta-modal" class="modal-hidden">
-		<div class="modal-content">
+		<!--Escala personalizada-->
+		
+		<div id="escala-personalizada">
+		<div class="escala-barra"></div>
+		<div class="escala-etiqueta">200 m</div>
+
+
+		</div>
+
+		<!--Capas base-->
+
+		<div id="capasbase">
+		<button id="botonpnoa">Foto aérea</button>
+		<button id="botonosm">Open Street Map</button>
+		<button id="botonesri">ESRI Maps</button>
+		</div>
+
+		<!--Botón agregar refugio-->
+
+		<div id="agregarrefugio">
+		<button id="botonagregarrefugio">
+			<span class="icono">&#x2795</span> Agregar refugio
+		</button>
+		</div>
+
+		<!--Leyenda y botón asociado-->
+
+		<button
+			id="boton-mostrar-leyenda"
+			type="button"
+			aria-controls="leyenda-refugios"
+			aria-expanded="false"
+			title="Mostrar leyenda">
+			☷ Leyenda
+		</button>
+		
+		<div id="leyenda-refugios" class="oculto" aria-label="Leyenda de símbolos"></div>
+		
+	</div>
+
+	<div id="encuesta-modal" class="modal modal-oculto">
+		<div class="contenido-modal">
 			<div id="modal-contenido"></div>
 		</div>
 	</div>
 
-	<div id="asistente-modal" class="modal-hidden">
-		<div class="modal-content">
+	<div id="asistente-modal" class="modal modal-oculto">
+		<div class="contenido-modal">
 			<div id="asistente-contenido"></div>
 			<div class="boton-centro">
-				<button id="btn-cancelar-asistente" class="enviar-btn">Cancelar</button>
-				<button id="btn-siguiente-asistente" class="enviar-btn">Siguiente</button>
-				<button id="btn-finalizar-asistente" class="enviar-btn">Finalizar</button>
+				<button id="boton-cancelar-asistente" class="boton-enviar">Cancelar</button>
+				<button id="boton-siguiente-asistente" class="boton-enviar">Siguiente</button>
+				<button id="boton-finalizar-asistente" class="boton-enviar">Finalizar</button>
 			</div>
 		</div>
 	</div>
 	
-
-	<div id="capasbase">
-		<button id="botonpnoa">Foto aérea</button>
-		<button id="botonosm">Open Street Map</button>
-		<button id="botonesri">ESRI Maps</button>
-	</div>
-
-	<div id="agregarrefugio">
-		<button id="botonagregarrefugio">
-			<span class="icono">&#x2795</span> Agregar refugio
-		</button>
-	</div>
-
-	<div id="modalCompartir" class="modal modal-hidden">
-		<div class="modal-content">
-			<h3>Compartir refugio</h3>
-			<div class="opciones">
-				<button onclick="compartirVistaActual()">Compartir Vista actual del mapa</button>
-				<button id="compartir-refugio-btn" onclick="compartirRefugioBtn()">Compartir refugio</button>
-
-				<button onclick="cerrarModalCompartir()">Cancelar</button>
-			</div>
-		</div>
-	</div>
-
-	<div id="leyenda-refugios" class="leyenda-zoom-alto oculto">
-		<div class="leyenda-header">
-			<h4>Leyenda de símbolos</h4>
-			<button id="cerrar-leyenda" title="Cerrar leyenda">X</button>
-		</div>
-			<ul id="contenido-leyenda"></ul>
-	</div>
-
 	<div id="pie">
 
 		<div class="pie-izquierda" id="coordenadas_mapa">Coordenadas: </div>
 
 		<div class="pie-centro">
-			<a href="https://www.linkedin.com" target="_blank">
-				<img src="img/linkedin.png" class="icono-social">
-			</a>
-			<a href="mailto:julian@hotmail.com">
-				<img src="img/email.svg" class="icono-social">
-			</a>
-			A. Julián Hernández // Ángel J. Sánchez
-			<a href="https://www.linkedin.com" target="_blank">
-				<img src="img/linkedin.png" class="icono-social">
-			</a>
-			<a href="mailto:julian@hotmail.com">
-				<img src="img/email.svg" class="icono-social">
-			</a>
+			Jesús Vargas Molina // Germán Pablo Miñón
 		</div>
 
 		<div class="pie-derecha" id="fecha_hora"></div>
@@ -131,42 +131,33 @@
 		
 	<!--Aquí van los plugins-->
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 	<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
 	<!--USER ID Y API DE EMAILJS-->
 
 	<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-	<script>
+	<!--Configuración pública del servicio de altas y protección contra automatizaciones-->
+	<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"></script>
+	<script src="js/00-configuracion-servicio.js"></script>
 
-		window.addEventListener("load", function() {
-			if (typeof emailjs !== "undefined") {
-				emailjs.init("XVVy-IexTTomx60lY");
-				console.log("EmailJS cargado correctamente");
-			} else {
-				console.error("La biblioteca no se ha cargado");
-			}
-		});
-
-	</script>
-
-	<!--HTML 2 CANVAS-->
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
-        integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
-        crossorigin="anonymous"
-        referrer licy="no-referrer"></script>
-
-	<!--TURF-->
-
-	<script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
-
-	
 	<!--Aquí el enlace al script del visor-->
 		
-	<script src="script.js"></script>
+		<script src="js/01-mapa.js"></script>
+	<script src="js/02-tipos-refugio.js"></script>
+	<script src="js/03-leyenda.js"></script>
+	<script src="js/04-datos-refugios.js"></script>
+	<script src="js/05-fichas-refugio.js"></script>
+	<script src="js/06-capas-base.js"></script>
+	<script src="js/07-pie-mapa.js"></script>
+	<script src="js/08-encuestas.js"></script>
+	<script src="js/09-navegacion-municipios.js"></script>
+	<script src="js/10-alta-refugios.js"></script>
+	<script src="js/11-enlaces.js"></script>
+	<script src="js/12-ajustes-pantalla.js"></script>
+
+	
+	
 
 	
 	</body>

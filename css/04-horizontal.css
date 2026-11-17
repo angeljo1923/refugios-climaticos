@@ -1,0 +1,133 @@
+/* 04 HORIZONTAL */
+
+/* 09. Pantallas de poca altura: <=500 px */
+@media screen and (max-height: 500px) {
+    .ventana-refugio .leaflet-popup-content {
+        max-height: 48dvh;
+    }
+
+    .ventana-refugio .ficha-refugio-cabecera {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .ventana-refugio .ficha-refugio-datos {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+}
+
+
+/* 10. Pantallas horizontales bajas: <=500 px */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    #boton-mostrar-leyenda {
+        bottom: 40px;
+        right: 8px;
+        min-height: 30px;
+        padding: 5px 9px;
+        font-size: 11px;
+    }
+
+    #leyenda-refugios:not(.oculto) {
+        bottom: 80px;
+    }
+
+    #leyenda-refugios {
+        width: 210px;
+        max-width: 42vw;
+        max-height: max(0px, calc(100% - 205px)) !important;
+    }
+
+    #mapa .ventana-refugio.ventana-acoplada {
+        position: absolute !important;
+        left: 50% !important;
+        top: auto !important;
+        bottom: 46px !important;
+        transform: translateX(-50%) !important;
+        width: var(--ancho-ventana-acoplada, 390px) !important;
+        max-width: calc(100% - 20px) !important;
+        margin: 0 !important;
+        z-index: 1250 !important;
+    }
+
+    #mapa .ventana-refugio.ventana-acoplada
+    .leaflet-popup-content-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    #mapa .ventana-refugio.ventana-acoplada
+    .leaflet-popup-content {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        max-height: min(130px, 34dvh) !important;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    #mapa .ventana-refugio.ventana-acoplada
+    .leaflet-popup-tip-container {
+        display: none;
+    }
+
+    #mapa .ventana-refugio.ventana-acoplada
+    .ficha-refugio-cabecera {
+        padding: 6px 33px 6px 9px;
+        gap: 6px;
+    }
+
+    #mapa .ventana-refugio.ventana-acoplada
+    .ficha-refugio-cabecera h3 {
+        font-size: 12px;
+        line-height: 1.15;
+    }
+
+    #mapa .ventana-refugio.ventana-acoplada
+    .ficha-refugio-datos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding: 6px 9px;
+        gap: 5px 8px;
+    }
+
+    #mapa .ventana-refugio.ventana-acoplada
+    .ficha-refugio-ubicacion {
+        padding: 4px 0;
+        margin: 0 9px;
+    }
+
+    #mapa .ventana-refugio.ventana-acoplada
+    .ficha-refugio-acciones {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 4px;
+        padding: 5px 9px 7px;
+    }
+
+    #mapa .ventana-refugio.ventana-acoplada
+    .ficha-refugio-acciones .boton-encuesta {
+        min-width: 0;
+        min-height: 30px;
+        padding: 4px;
+        font-size: 9px;
+    }
+
+    #mapa .ventana-refugio.ventana-acoplada
+    .ficha-refugio-acciones .boton-encuesta:last-child {
+        grid-column: auto;
+    }
+
+    #aviso-seleccion-refugio {
+        bottom: 45px;
+        padding: 7px 10px;
+        gap: 4px;
+        font-size: 12px;
+    }
+
+    #aviso-seleccion-refugio strong {
+        font-size: 13px;
+    }
+
+}
+
