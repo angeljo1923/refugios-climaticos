@@ -1,0 +1,9 @@
+# Directorio temporal generado por el flujo de publicación
+publicacion/
+# Carpetas temporales y pruebas de Python
+__pycache__/
+*.pyc
+.env
+.env.*
+# Nunca guardar aquí credenciales ni datos privados de Google Sheets
+credenciales*.json

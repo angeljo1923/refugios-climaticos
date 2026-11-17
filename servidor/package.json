@@ -1,0 +1,7 @@
+{
+  "name": "servidor-refugios-climaticos",
+  "private": true,
+  "scripts": {"desplegar": "wrangler deploy", "local": "wrangler dev", "comprobar": "node --test pruebas/*.test.mjs"},
+  "devDependencies": {"wrangler": "^4.36.0"},
+  "type": "module"
+}
