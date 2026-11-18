@@ -61,7 +61,7 @@ async function municipioPorPoligono(latitud, longitud) {
     geometry: JSON.stringify({x: longitud, y: latitud, spatialReference: {wkid: 4326}}),
     inSR: "4326",
     spatialRel: "esriSpatialRelIntersects",
-    outFields: "NATCODE,NAMEUNIT",
+    outFields: "codine,NATCODE,NAMEUNIT",
     returnGeometry: "false"
   });
   const senal = AbortSignal.timeout(10000);
@@ -72,9 +72,18 @@ async function municipioPorPoligono(latitud, longitud) {
     throw new Error("Respuesta cartográfica no válida.");
   }
   const encontrado = cuerpo.features
-    .map(f => String(f.attributes?.NATCODE ?? "").trim())
-    .map(codigo => codigo.match(/(?:^|\D)(29067|41091)$/)?.[1] || "")
-    .find(codigo => codigo === "29067" || codigo === "41091");
+  .map(f => {
+    const codigoIne = String(f.attributes?.codine ?? "").trim();
+
+    if (codigoIne === "29067" || codigoIne === "41091") {
+      return codigoIne;
+    }
+
+    const codigoNacional = String(f.attributes?.NATCODE ?? "").trim();
+
+    return codigoNacional.match(/(?:^|\D)(29067|41091)$/)?.[1] || "";
+  })
+  .find(codigo => codigo === "29067" || codigo === "41091");
   if (encontrado === "29067") return {cod_mun: "29067", municipio: "Málaga", provincia: "Málaga"};
   if (encontrado === "41091") return {cod_mun: "41091", municipio: "Sevilla", provincia: "Sevilla"};
   return null;
@@ -175,7 +184,7 @@ async function tramitarAlta(peticion, entorno, origen) {
   };
 
   try {
-    const respuesta = await fetch(`${entorno.URL_SHEETDB}?mode=RAW`, {
+    const respuesta = await fetch(`${entorno.URL_SHEETDB}?mode=RAW&sheet=refugios_nuevos`, {
       method: "POST", headers: {
         "Content-Type": "application/json",
         "Authorization": entorno.CABECERA_AUTORIZACION_SHEETDB
