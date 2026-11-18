@@ -7,3 +7,9 @@ __pycache__/
 .env.*
 # Nunca guardar aquí credenciales ni datos privados de Google Sheets
 credenciales*.json
+# Dependencias de Node.js
+node_modules/
+
+# Archivos locales de Wrangler
+.wrangler/
+.dev.vars*

@@ -1,7 +1,7 @@
 /* 00 CONFIGURACIÓN PÚBLICA. No colocar aquí secretos ni URL de SheetDB. */
 const CONFIGURACION_SERVIDOR = Object.freeze({
-    urlServicio: "https://SUSTITUIR-POR-TU-WORKER.workers.dev",
-    clavePublicaTurnstile: "SUSTITUIR-POR-LA-CLAVE-PUBLICA"
+    urlServicio: "https://refugios-climaticos-altas.refugios-climaticos-uma-2026.workers.dev",
+    clavePublicaTurnstile: "0x4AAAAAAGHRXg7m4mN2uxL6"
 });
 
 function obtenerDireccionServicio(ruta) {
