@@ -35,8 +35,7 @@ jobs:
 
     steps:
       - name: Obtener la versión actual del repositorio
-        uses: uses: actions/checkout@v6
-
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -78,13 +77,11 @@ jobs:
 
       - name: Configurar GitHub Pages
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || steps.cambios.outputs.geojson_modificado == 'si'
-        uses: uses: actions/configure-pages@v6
-
+        uses: actions/configure-pages@v6
 
       - name: Empaquetar los archivos del visor
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || steps.cambios.outputs.geojson_modificado == 'si'
-        uses: uses: actions/upload-pages-artifact@v5
-
+        uses: actions/upload-pages-artifact@v5
         with:
           path: publicacion
 
