@@ -3,6 +3,8 @@ name: Sincronizar altas aprobadas y publicar visor
 on:
   workflow_dispatch:
   # Apps Script solicita una ejecución al editar y otra diaria como respaldo.
+  pull_request:
+    branches: [main]
   push:
     branches: [main]
     paths:
@@ -26,8 +28,21 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  comprobar-pull-request:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Obtener codigo para comprobaciones
+        uses: actions/checkout@v6
+      - name: Comprobar integridad de archivos publicos
+        run: python3 herramientas/comprobar_entrega.py
+      - name: Ejecutar pruebas sin publicar
+        run: python3 -m unittest discover -s herramientas/sincronizacion/pruebas -p 'test_*.py' -v
+
   actualizar-y-publicar:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -75,11 +90,18 @@ jobs:
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || steps.cambios.outputs.geojson_modificado == 'si'
         run: python3 herramientas/sincronizacion/preparar_publicacion.py
 
+      - name: Verificar paquete preparado para Pages
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || steps.cambios.outputs.geojson_modificado == 'si'
+        run: |
+          test -f publicacion/index.html
+          ls -lah publicacion/
+
       - name: Configurar GitHub Pages
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || steps.cambios.outputs.geojson_modificado == 'si'
         uses: actions/configure-pages@v6
 
       - name: Empaquetar los archivos del visor
+        id: paquete_pages
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || steps.cambios.outputs.geojson_modificado == 'si'
         uses: actions/upload-pages-artifact@v5
         with:
@@ -87,5 +109,5 @@ jobs:
 
       - name: Publicar el visor en GitHub Pages
         id: publicacion
-        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || steps.cambios.outputs.geojson_modificado == 'si'
+        if: steps.paquete_pages.outcome == 'success'
         uses: actions/deploy-pages@v5
